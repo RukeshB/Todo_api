@@ -47,7 +47,8 @@ class TodoController extends Controller
      */
     public function show($id)
     {
-        //
+        $todo = TodoModel::find($id);
+        return \response()->json($todo,200);
     }
 
     /**
