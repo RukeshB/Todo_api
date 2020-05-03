@@ -14,7 +14,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        return \response()->json(TodoModel::get(),201);
+        return \response()->json(TodoModel::get(),200);
     }
 
     /**
@@ -35,7 +35,8 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $todo = TodoModel::create($request->all());
+        return \response()->json($todo,201);
     }
 
     /**
