@@ -84,6 +84,8 @@ class TodoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $todo = TodoModel::find($id);
+        $todo->delete();
+        return \response()->json(null,204);
     }
 }
