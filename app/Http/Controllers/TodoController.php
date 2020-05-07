@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\model\TodoModel;
+use Validator;
 
 class TodoController extends Controller
 {
@@ -35,6 +36,15 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
+        $validation=[
+            'user_id'=>'required',
+            'title'=>'required|min:3',
+        ];
+        $validator = Validator::make($request->all(),$validation);
+        if($validator->fails())
+        {
+            return \response()->json($validator->errors(),400);
+        }
         $todo = TodoModel::create($request->all());
         return \response()->json($todo,201);
     }
@@ -48,6 +58,10 @@ class TodoController extends Controller
     public function show($id)
     {
         $todo = TodoModel::find($id);
+        if(is_null($todo))
+        {
+            return \response()->json(["message"=>"data not found"],404);
+        }
         return \response()->json($todo,200);
     }
 
@@ -72,6 +86,10 @@ class TodoController extends Controller
     public function update(Request $request, $id)
     {
          $todo = TodoModel::find($id);
+         if(is_null($todo))
+         {
+             return \response()->json(["message"=>"data not found"],404);
+         }
          $todo->update($request->all());
          return \response()->json($todo,200);
     }
@@ -85,6 +103,10 @@ class TodoController extends Controller
     public function destroy($id)
     {
         $todo = TodoModel::find($id);
+        if(is_null($todo))
+        {
+            return \response()->json(["message"=>"data not found"],404);
+        }
         $todo->delete();
         return \response()->json(null,204);
     }
