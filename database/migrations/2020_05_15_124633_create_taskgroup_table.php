@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTodoTable extends Migration
+class CreateTaskgroupTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateTodoTable extends Migration
      */
     public function up()
     {
-        Schema::create('todo', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
-            $table->char('title',100);
-            $table->enum('completed',['true','false'])->default('false');
-            $table->foreign('user_id')->references('id')->on('users');
+        Schema::create('taskgroup', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('title');
+              $table->date('due_date');
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ class CreateTodoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('_todo_');
+        Schema::dropIfExists('taskgroup');
     }
 }
