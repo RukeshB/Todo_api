@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\model\TodoModel;
+use App\model\TasklistModel;
 use Validator;
 
-class TodoController extends Controller
+class TasklistController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        return \response()->json(TodoModel::get(),200);
+        return \response()->json(TasklistModel::get(),200);
     }
 
     /**
@@ -38,14 +38,15 @@ class TodoController extends Controller
     {
         $validation=[
             'user_id'=>'required',
-            'title'=>'required|min:3',
+            'task'=>'required|min:3',
+            'group_id'=>'required',
         ];
         $validator = Validator::make($request->all(),$validation);
         if($validator->fails())
         {
             return \response()->json($validator->errors(),400);
         }
-        $todo = TodoModel::create($request->all());
+        $todo = TasklistModel::create($request->all());
         return \response()->json($todo,201);
     }
 
@@ -57,7 +58,7 @@ class TodoController extends Controller
      */
     public function show($id)
     {
-        $todo = TodoModel::find($id);
+        $todo = TasklistModel::find($id);
         if(is_null($todo))
         {
             return \response()->json(["message"=>"data not found"],404);
@@ -85,7 +86,7 @@ class TodoController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $todo = TodoModel::find($id);
+         $todo = TasklistModel::find($id);
          if(is_null($todo))
          {
              return \response()->json(["message"=>"data not found"],404);
@@ -102,7 +103,7 @@ class TodoController extends Controller
      */
     public function destroy($id)
     {
-        $todo = TodoModel::find($id);
+        $todo = TasklistModel::find($id);
         if(is_null($todo))
         {
             return \response()->json(["message"=>"data not found"],404);

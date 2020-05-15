@@ -41,4 +41,9 @@ class User extends Authenticatable
    {
        return $this->hasMany('App\model\TodoModel');
    }
+
+   public function tasklist()
+    {
+        return $this->hasMany('App\model\TasklistModel','user_id');
+    }
 }
