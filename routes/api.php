@@ -18,4 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('todo','TasklistController');
+Route::apiResource('tasklist','TasklistController');
+Route::apiResource('taskgroup','TaskgroupController');
